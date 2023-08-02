@@ -24,13 +24,13 @@ exports.login = catchAsync(async (req, res) => {
   }
 
   const token = jwt.sign({ email: user.email, id: user._id, passwordVersion: user.passwordVersion }, JWT_SECRET, {
-    expiresIn: 24 * 60 * 60
+    expiresIn: 60 * 60 * 1000
   })
 
   res.cookie('jwt-server-token', token, {
     httpOnly: true,
     // secure: true,
-    maxAge: 3600000
+    maxAge: 60 * 60 * 1000
   })
 
   res.status(200).json({
@@ -56,7 +56,7 @@ exports.register = catchAsync(async (req, res) => {
 
   const { email, id, passwordVersion } = user
   const token = jwt.sign({ email, id, passwordVersion }, JWT_SECRET, {
-    expiresIn: 24 * 60 * 60,
+    expiresIn: 60 * 1000,
   })
 
   res.status(201).json({

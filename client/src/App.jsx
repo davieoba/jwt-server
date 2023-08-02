@@ -33,15 +33,14 @@ const router = createBrowserRouter([
   {
     path: '/dashboard',
     element: (
-      // <Protected>
+      <Protected>
         <Dashboard />
-      // </Protected>
+      </Protected>
     )
   }
 ])
 
 function App() {
-
   return (
     <section>
       <RouterProvider router={router} />
