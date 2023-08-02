@@ -1,8 +1,6 @@
-const catchAsync = require('../utils/catchAsync')
 const router = require('express').Router()
+const { register } = require('../controllers/auth-controller')
 
-router.get('/', catchAsync(async (req, res) => {
-  res.send('ok')
-}))
+router.get('/', register)
 
 module.exports = router

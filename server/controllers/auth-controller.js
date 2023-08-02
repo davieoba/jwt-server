@@ -27,5 +27,4 @@ exports.register = catchAsync(async (req, res) => {
       token
     }
   })
-
 })
