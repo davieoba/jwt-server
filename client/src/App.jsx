@@ -33,9 +33,9 @@ const router = createBrowserRouter([
   {
     path: '/dashboard',
     element: (
-      <Protected>
+      // <Protected>
         <Dashboard />
-      </Protected>
+      // </Protected>
     )
   }
 ])

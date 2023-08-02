@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
   },
   passwordResetExpire: {
     type: Date
+  },
+  passwordVersion: {
+    type: Number,
+    default: 1
   }
 })
 

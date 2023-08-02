@@ -1,19 +1,20 @@
 /* eslint-disable react/prop-types */
 // import { Dialog } from '@headlessui/react'
+import axios from "axios"
 import { Navbar } from "../../components/navbar"
 
-// import axios from 'axios'
 // import { SvgSpinners90Ring } from '../../components/icons'
-// import { useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 
 const Dashboard = () => {
 
-  // const fetchUser = async () => {
-  //   const response = await axios.get('http://localhost:5000/api/v1/user', { withCredentials: true })
-  //   return response.data
-  // }
+  const fetchUser = async () => {
+    const response = await axios.get('http://localhost:5000/api/v1/user', { withCredentials: true })
+    return response.data
+  }
 
-  // const { data } = useQuery(['getUserData'], fetchUser)
+  const { data } = useQuery(['getUserData'], fetchUser)
+  console.log('dashboard', { data })
 
   // const fetchAllUsers = async () => {
   //   setIsOpen(true)
