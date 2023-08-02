@@ -18,7 +18,7 @@ exports.login = catchAsync(async (req, res) => {
   const auth = await bcrypt.compare(req.body.password, user.password)
 
   if (auth === false) {
-    res.status(401).json({
+    return res.status(401).json({
       message: 'Failed credentials'
     })
   }
