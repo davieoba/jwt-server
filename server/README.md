@@ -10,3 +10,7 @@
 
 [jwt-best-practices](https://curity.io/resources/learn/jwt-best-practices/)
 [o-auth-jwt-best-practice](https://auth0.com/docs/secure/tokens/token-best-practices)
+
+access token are given to the users and they are usually short lived
+ 
+refresh token: so when an access token has expired, the refresh token will (if it has not expired itself) generate another access token, this is very interesting because it shows that the server must keep track of who is who and therefore is no longer stateless.

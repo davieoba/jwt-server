@@ -4,6 +4,32 @@ const jwt = require('jsonwebtoken')
 const catchAsync = require('../utils/catchAsync')
 const { JWT_SECRET } = require('../utils/config')
 
+const sign_jwt = async (user) => {
+  const token = jwt.sign({ email: user.email, id: user._id, passwordVersion: user.passwordVersion }, JWT_SECRET, {
+    expiresIn: 60 * 60 * 1000
+  })
+
+  return token
+}
+
+const sendToken = async (user, statusCode = 200, res) => {
+  const token = await sign_jwt(user)
+
+  res.cookie('jwt-server-token', token, {
+    httpOnly: true,
+    // secure: true,
+    maxAge: 60 * 60 * 1000
+  })
+
+  res.status(statusCode).json({
+    message: 'login successful',
+    data: {
+      user,
+      token
+    }
+  })
+}
+
 exports.login = catchAsync(async (req, res) => {
   if (!req.body.email || !req.body.password) {
     throw new Error('please fill in all missing credentials')
@@ -23,24 +49,7 @@ exports.login = catchAsync(async (req, res) => {
     })
   }
 
-  const token = jwt.sign({ email: user.email, id: user._id, passwordVersion: user.passwordVersion }, JWT_SECRET, {
-    expiresIn: 60 * 60 * 1000
-  })
-
-  res.cookie('jwt-server-token', token, {
-    httpOnly: true,
-    // secure: true,
-    maxAge: 60 * 60 * 1000
-  })
-
-  res.status(200).json({
-    message: 'login successful',
-    data: {
-      user,
-      token
-    }
-  })
-
+  sendToken(user, 200, res)
 })
 
 exports.register = catchAsync(async (req, res) => {
@@ -54,28 +63,7 @@ exports.register = catchAsync(async (req, res) => {
     password: await bcrypt.hash(req.body.password, 10)
   })
 
-  const { email, id, passwordVersion } = user
-  const token = jwt.sign({ email, id, passwordVersion }, JWT_SECRET, {
-    expiresIn: 60 * 1000,
-  })
-
-  res.cookie('jwt-server-token', token, {
-    httpOnly: true,
-    // secure: true,
-    maxAge: 60 * 60 * 1000
-  })
-
-  res.status(201).json({
-    message: 'user created',
-    data: {
-      user: {
-        name: user.name,
-        email: user.email,
-        role: user.role
-      },
-      token
-    }
-  })
+  sendToken(user, 200, res)
 })
 
 exports.logout = catchAsync((req, res) => {
@@ -84,6 +72,7 @@ exports.logout = catchAsync((req, res) => {
     // secure: true,
     maxAge: 1
   })
+  req.user = null
 
   res.redirect('/')
 })

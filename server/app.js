@@ -11,7 +11,7 @@ const app = express()
 // connect to mongodb
 mongoose
   .connect(config.MONGODB_URI)
-  .then(() => { console.log('Connected to the LOCAL DB') })
+  .then(() => { console.log('Connected to the DB') })
   .catch((err) => {
     console.log('error connecting to the DB', err)
   })

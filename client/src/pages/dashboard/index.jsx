@@ -18,7 +18,6 @@ const Dashboard = () => {
   }
 
   const { data } = useQuery(['getUserData'], fetchUser)
-  console.log('dashboard', { data })
 
   const fetchAllUsers = async () => {
     setIsOpen(true)
@@ -31,7 +30,7 @@ const Dashboard = () => {
     }, 3000)
   }
 
-  console.log(data?.user?.role)
+  console.log(users)
 
   // const { data: users } = useQuery(['getAllUsers'], fetchAllUsers)
 
