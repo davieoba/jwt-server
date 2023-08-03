@@ -10,3 +10,12 @@ exports.getUser = catchAsync(async (req, res) => {
     user
   })
 })
+
+exports.getAllUsers = catchAsync(async (req, res) => {
+  const users = await User.find()
+
+  res.status(200).json({
+    message: 'success',
+    users
+  })
+})

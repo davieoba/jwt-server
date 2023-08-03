@@ -11,7 +11,7 @@ exports.checkUser = catchAsync(async (req, res, next) => {
     token = cookieData['jwt-server-token']
   }
 
-  if (token.length < 1) {
+  if (token === undefined || token?.length < 1) {
     return res.status(400).json({
       message: 'Unauthorized'
     })
@@ -39,3 +39,15 @@ exports.checkUser = catchAsync(async (req, res, next) => {
   req.user = user
   next()
 }) 
+
+exports.restrict = (...role) => {
+  return catchAsync((req, res, next) => {
+    if (role.includes(req.user.role)) {
+      return next()
+    }
+
+    res.status(400).json({
+      message: 'Unauthorized'
+    })
+  })
+}

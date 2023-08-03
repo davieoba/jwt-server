@@ -59,6 +59,12 @@ exports.register = catchAsync(async (req, res) => {
     expiresIn: 60 * 1000,
   })
 
+  res.cookie('jwt-server-token', token, {
+    httpOnly: true,
+    // secure: true,
+    maxAge: 60 * 60 * 1000
+  })
+
   res.status(201).json({
     message: 'user created',
     data: {
@@ -70,4 +76,14 @@ exports.register = catchAsync(async (req, res) => {
       token
     }
   })
+})
+
+exports.logout = catchAsync((req, res) => {
+  res.cookie('jwt-server-token', '', {
+    httpOnly: true,
+    // secure: true,
+    maxAge: 1
+  })
+
+  res.redirect('/')
 })
