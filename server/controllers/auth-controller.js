@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs")
-const User = require('../models/user-model')
 const jwt = require('jsonwebtoken')
+const User = require('../models/user-model')
 const catchAsync = require('../utils/catchAsync')
 const { JWT_SECRET } = require('../utils/config')
 
